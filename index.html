@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dynamic Web Component Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-hi-sd-ce.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--
+      The following can be uncommented along with the hello-world element below as an
+      alternative to the purely script-driven method of including the custom element
+      also depicted below.
+    -->
+    <!-- <link rel="import" href="http://localhost/components/hello-world.html"> -->
+  </head>
+  <body>
+    <!-- <hello-world></hello-world> -->
+    <div>
+      <script>
+        let link = document.createElement('link');
+        link.rel = 'import';
+        link.href = 'http://localhost/components/hello-world.html';
+        document.head.appendChild(link);
+
+        let parentElement = document.currentScript.parentElement;
+        document.body.style.opacity = 0;
+        window.addEventListener('WebComponentsReady', () => {
+          // show body now that everything is ready
+          document.body.style.opacity = 1;
+          parentElement.innerHTML = '<hello-world></hello-world>';
+        });
+      </script>
+    </div>
+  </body>
+</html>

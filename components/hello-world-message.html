@@ -1,0 +1,55 @@
+<template id="hello-world-message">
+  <!--
+    Including styling and functionality from a reusable library like Bootstrap
+    can be handled by referencing it from a content delivery network.
+    Alternatively, you can extract the desired styling and embed it in your
+    web component.  The latter allows your component to be more stand-alone.
+    It may also be a good idea to allow your component's look and feel to be
+    influenced externally via CSS variables or attributes.
+  -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <input type="text" readonly></input>
+</template>
+
+<script>
+(() => {
+  const importDocument = document.currentScript.ownerDocument;
+
+  customElements.define('hello-world-message', class extends HTMLElement {
+    constructor() {
+      super();
+      let root = this.attachShadow({mode: 'open'});
+      /**
+       *  The following line originally read:
+       *
+       *    let template = importDocument.querySelector('template');
+       *
+       *  This worked great in browsers that support shadow DOM.
+       *  However, for those that have to be polyfilled, there is no
+       *  guarantee that the template you get a handle to belongs
+       *  to this particular element.  Instead, it may belong to
+       *  a parent element that this element is included within.
+       *  In fact, that's what happened when I ran the example
+       *  in Firefox; this element's input field overwrote the
+       *  content within the "hello-world" element.
+       * */
+      let template = importDocument.getElementById('hello-world-message');
+      let templateClone = document.importNode(template.content, true);
+      root.appendChild(templateClone);
+    }
+
+    static get observedAttributes() {
+      return [ 'language' ];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      fetch(`http://localhost/api/greeting/${newValue}`).then(response => {
+        return response.json();
+      }).then(greeting => {
+        this.shadowRoot.querySelector('input').value = greeting.message;
+      });
+    };
+  });
+})();
+</script>

@@ -1,0 +1,17 @@
+extends:
+  - eslint:recommended
+  - google
+parserOptions:
+  ecmaVersion: 6
+env:
+  node: true
+globals:
+  Promise: true
+rules:
+  new-cap: off
+  comma-dangle:
+    - error
+    - never
+  no-console: off
+  max-len: off
+  prefer-rest-params: off

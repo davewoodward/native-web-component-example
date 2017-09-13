@@ -1,0 +1,24 @@
+{
+  "name": "native-web-component-example",
+  "version": "1.0.0",
+  "description": "Demonstrates a composite native web component that uses attributes, event handling, binding, and calls a REST API.",
+  "main": "index.js",
+  "author": "Dave Woodward",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server",
+    "lint": "eslint . --ext js --ignore-path .gitignore",
+    "test": "mocha ./tests/**/*.spec.js --timeout 5000"
+  },
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^1.0.10",
+    "bootstrap": "^3.3.7",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-google": "^0.9.1"
+  }
+}
